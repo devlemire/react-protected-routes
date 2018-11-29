@@ -65,7 +65,12 @@ module.exports = {
       const hashed_password = await bcrypt.hash(password, salt)
 
       db.get('users')
-        .push({ id: shortid.generate(), username, password: hashed_password })
+        .push({
+          id: shortid.generate(),
+          username,
+          password: hashed_password,
+          roles: [{ id: 0, role: 'user' }]
+        })
         .write()
 
       res.sendStatus(200)
