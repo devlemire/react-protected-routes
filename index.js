@@ -1,13 +1,28 @@
+// Get environment variables
 require('dotenv').config({ path: `${__dirname}/.env` })
+
+// Server Dependencies
 const express = require('express')
 const morgan = require('morgan')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 
+// Utilities
+const init_lowdb = require('./utils/init_lowdb')
+
+// Environment Variables
 const { PORT, NODE_ENV, SESSION_SECRET, REDIS_HOST, REDIS_PORT } = process.env
 
+// Create an express instance
 const app = express()
+
+// Read JSON from request body
+app.use(express.json())
+
+// Log all incoming requests with the morgan package
 app.use(morgan('dev'))
+
+// Use persisting sessions with express-session and connect-redis
 app.use(
   session({
     store: new RedisStore({
@@ -26,6 +41,12 @@ app.use(
     }
   })
 )
+
+// Specifiy all the available routes under /api
+app.use('/api', require('./routes'))
+
+// Initialize lowdb with defaults
+init_lowdb()
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
