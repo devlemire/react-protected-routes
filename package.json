@@ -17,6 +17,7 @@
     "express-session": "^1.15.6",
     "lowdb": "^1.0.0",
     "morgan": "^1.9.1",
+    "path": "^0.12.7",
     "shortid": "^2.2.14"
   },
   "devDependencies": {

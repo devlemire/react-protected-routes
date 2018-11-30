@@ -6,6 +6,7 @@ const express = require('express')
 const morgan = require('morgan')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
+const path = require('path')
 
 // Utilities
 const init_lowdb = require('./utils/init_lowdb')
@@ -44,6 +45,11 @@ app.use(
 
 // Specifiy all the available routes under /api
 app.use('/api', require('./routes'))
+
+app.use(express.static(`${__dirname}/public/build`))
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/public/build/index.html`))
+})
 
 // Initialize lowdb with defaults
 init_lowdb()

@@ -1,0 +1,17 @@
+#Landing-section {
+}
+
+#Landing-section p {
+  margin-top: 0px;
+}
+
+#Landing-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#Landing-actions a:not(:last-of-type) {
+  margin-right: 16px;
+}
