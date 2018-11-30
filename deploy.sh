@@ -7,4 +7,4 @@ git pull
 
 cd public && yarn && yarn build
 
-cd .. && forever start -l react-protected-routes.log -a --uid rpr index.js
+cd .. && yarn && forever start -l react-protected-routes.log -a --uid rpr index.js
