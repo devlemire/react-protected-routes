@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - 10
+addons:
+  ssh_known_hosts:
+    - 198.199.116.198
+before_install:
+  - openssl aes-256-cbc -K $encrypted_60f07b205e4b_key -iv $encrypted_60f07b205e4b_iv -in id_rsa.enc -out id_rsa -d
+  - chmod 600 id_rsa
+  - mv id_rsa ~/.ssh/id_rsa
+install:
+  - yarn
+  - cd public && yarn
+before_script:
+  - cd public && yarn build
+script:
+  - echo this is where a test suite would be ran
+deploy:
+  - provider: script
+    script: ssh -i ~/.ssh/id_rsa james@198.199.116.198 'bash -s' < "$TRAVIS_BUILD_DIR/deploy.sh"
+    skip_cleanup: true
+    on:
+      branch: master
+notifications:
+  email: false
